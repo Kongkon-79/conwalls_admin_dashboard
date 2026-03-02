@@ -331,7 +331,7 @@ const TrainersPage = () => {
       <AddTrainerModal
         open={showAddModal}
         onClose={() => setShowAddModal(false)}
-        onSuccess={handleRefresh}
+        // onSuccess={handleRefresh}
         accessToken={accessToken}
       />
       <EditTrainerModal
