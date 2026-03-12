@@ -17,7 +17,7 @@ interface HelpTextControlProps {
 }
 
 const HELP_TEXT_CATEGORIES = [
-    'Trigger',
+    'Relevance',
     'Vision',
     'The past (good old days)',
     'Obstacle / Problem',
