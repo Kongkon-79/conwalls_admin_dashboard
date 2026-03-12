@@ -28,6 +28,7 @@ import ResetPassword from './_components/ResetPassword'
 import SystemSettingsSkeleton from './_components/SystemSettingsSkeleton'
 
 import { SystemSettingsResponse, SystemSettings } from '@/types/settings'
+import TriggerAiPromptControl from './_components/TriggerAiPromptControl'
 
 const SettingsPage = () => {
   const t = useTranslations('common')
@@ -212,6 +213,29 @@ const SettingsPage = () => {
               </AccordionTrigger>
               <AccordionContent className="pt-2 pb-6">
                 <AiPromptControl
+                  settings={settings}
+                  onUpdate={() =>
+                    queryClient.invalidateQueries({
+                      queryKey: ['system-settings'],
+                    })
+                  }
+                />
+              </AccordionContent>
+            </AccordionItem>
+
+
+                {/* Trigger ai  */}
+              <AccordionItem
+              value="trigger-ai-prompt"
+              className="border-none bg-gradient-to-b from-[#F1FFC5] via-[#F6FFDA] to-white rounded-[8px] px-4 border-b border-[#8ADA55]"
+            >
+              <AccordionTrigger className="hover:no-underline py-4">
+                <span className="text-[22px] font-medium leading-[120%] text-[#00253E]">
+                  {t('triggerAiPrompt')}
+                </span>
+              </AccordionTrigger>
+              <AccordionContent className="pt-2 pb-6">
+                <TriggerAiPromptControl
                   settings={settings}
                   onUpdate={() =>
                     queryClient.invalidateQueries({

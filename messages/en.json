@@ -18,6 +18,7 @@
         "dashboard": "Dashboard",
         "helpTextControl": "Help Text Control",
         "aiPromptControl": "AI Prompt Control",
+        "triggerAiPrompt": "Trigger AI Prompt Control",
         "dropdownControl": "Dropdown Control",
         "resetPassword": "Reset Password",
         "noSettingsFound": "No Settings Found",
