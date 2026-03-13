@@ -2,28 +2,37 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import { useForm, useFieldArray } from 'react-hook-form'
+import { useForm, useFieldArray, useWatch } from 'react-hook-form'
 import { useSession } from 'next-auth/react'
 import { toast } from 'sonner'
 import { Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { Textarea } from '@/components/ui/textarea'
 import { SystemSettings, MeasureType } from '@/types/settings'
-
 import { useTranslations } from 'next-intl'
+import dynamic from 'next/dynamic'
+
+const TiptapEditor = dynamic(() => import('@/components/ui/tiptap-editor'), {
+  ssr: false,
+  loading: () => (
+    <div className="min-h-[300px] bg-white rounded-[4px] border border-[#E2E8F0] animate-pulse" />
+  ),
+})
 
 interface TriggerAiPromptControlProps {
   settings: SystemSettings | null
   onUpdate: () => void
 }
 
-const TriggerAiPromptControl = ({ settings, onUpdate }: TriggerAiPromptControlProps) => {
+const TriggerAiPromptControl = ({
+  settings,
+  onUpdate,
+}: TriggerAiPromptControlProps) => {
   const t = useTranslations('common')
   const { data: session } = useSession()
   const accessToken = session?.user?.accessToken
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const { register, control, handleSubmit, reset } = useForm<{
+  const { control, handleSubmit, reset, setValue } = useForm<{
     triggerAiPrompt: MeasureType[]
   }>({
     defaultValues: {
@@ -35,6 +44,8 @@ const TriggerAiPromptControl = ({ settings, onUpdate }: TriggerAiPromptControlPr
     control,
     name: 'triggerAiPrompt',
   })
+
+  const watchedFields = useWatch({ control, name: 'triggerAiPrompt' })
 
   // Sync with settings data when it loads
   useEffect(() => {
@@ -85,6 +96,7 @@ const TriggerAiPromptControl = ({ settings, onUpdate }: TriggerAiPromptControlPr
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-0">
+      {/* Header Row */}
       <div className="bg-[#00253E] text-white overflow-hidden rounded-t-[8px]">
         <div className="grid grid-cols-[1fr_200px_1fr] border-b border-gray-700">
           <div className="py-3 px-4 text-center font-bold text-sm uppercase text-[#D0DDE8]">
@@ -99,49 +111,58 @@ const TriggerAiPromptControl = ({ settings, onUpdate }: TriggerAiPromptControlPr
         </div>
       </div>
 
+      {/* Rows */}
       <div className="space-y-0 w-full overflow-x-auto">
         {fields.map((field, index) => (
           <div
             key={field.id}
-            className="grid grid-cols-[1fr_200px_1fr] items-stretch min-h-[160px] gap-6"
+            className="grid grid-cols-[1fr_200px_1fr] items-stretch gap-6 py-4"
           >
             {/* German Side */}
-            <div className="bg-[#D0DDE8] p-4 flex flex-col justify-center">
-              <span className="text-[12px] text-[#00253E] uppercase mb-2 font-semibold ml-1 opacity-60">
-                {t('promptLabel')}
+            <div className="bg-[#D0DDE8] p-4 flex flex-col gap-2 rounded-[4px]">
+              <span className="text-[11px] text-[#00253E] uppercase font-semibold opacity-60 tracking-wider">
+                {t('promptLabel')} (DE)
               </span>
-              <Textarea
-                {...register(`triggerAiPrompt.${index}.values.de`)}
+              <TiptapEditor
+                value={watchedFields?.[index]?.values?.de ?? ''}
+                onChange={(html) =>
+                  setValue(`triggerAiPrompt.${index}.values.de`, html, {
+                    shouldDirty: true,
+                  })
+                }
                 placeholder={t('germanPromptPlaceholder')}
-                className="flex-1 bg-white border border-[#E2E8F0] focus-visible:ring-0 resize-none text-[20px] font-normal leading-[110%] text-[#00253E] rounded-[4px] p-4"
               />
             </div>
 
-            {/* Middle Side */}
-            <div className="flex items-center justify-center py-4 ">
+            {/* Middle — name badge */}
+            <div className="flex items-center justify-center py-4">
               <div className="bg-[#BADA55] w-full min-h-[64px] py-4 flex items-center justify-center rounded-[4px] text-center px-4 shadow-sm border border-[#BADA55]">
                 <span className="text-[18px] font-semibold text-[#00253E] leading-[110%] uppercase">
                   {field.name}
                 </span>
-
               </div>
             </div>
 
             {/* English Side */}
-            <div className="bg-[#ECF2CB] p-4 flex flex-col justify-center ">
-              <span className="text-[12px] text-[#00253E] uppercase mb-2 font-semibold ml-1 opacity-60">
-                {t('promptLabel')}
+            <div className="bg-[#ECF2CB] p-4 flex flex-col gap-2 rounded-[4px]">
+              <span className="text-[11px] text-[#00253E] uppercase font-semibold opacity-60 tracking-wider">
+                {t('promptLabel')} (EN)
               </span>
-              <Textarea
-                {...register(`triggerAiPrompt.${index}.values.en`)}
+              <TiptapEditor
+                value={watchedFields?.[index]?.values?.en ?? ''}
+                onChange={(html) =>
+                  setValue(`triggerAiPrompt.${index}.values.en`, html, {
+                    shouldDirty: true,
+                  })
+                }
                 placeholder={t('englishPromptPlaceholder')}
-                className="flex-1 bg-white border border-[#E2E8F0] focus-visible:ring-0 resize-none text-[20px] font-normal leading-[110%] text-[#00253E] rounded-[4px] p-4"
               />
             </div>
           </div>
         ))}
       </div>
 
+      {/* Save Button */}
       <div className="flex justify-end pt-6">
         <Button
           type="submit"
