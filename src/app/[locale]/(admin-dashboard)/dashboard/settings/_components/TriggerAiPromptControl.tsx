@@ -12,38 +12,38 @@ import { SystemSettings, MeasureType } from '@/types/settings'
 
 import { useTranslations } from 'next-intl'
 
-interface AiPromptControlProps {
+interface TriggerAiPromptControlProps {
   settings: SystemSettings | null
   onUpdate: () => void
 }
 
-const TriggerAiPromptControl = ({ settings, onUpdate }: AiPromptControlProps) => {
+const TriggerAiPromptControl = ({ settings, onUpdate }: TriggerAiPromptControlProps) => {
   const t = useTranslations('common')
   const { data: session } = useSession()
   const accessToken = session?.user?.accessToken
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const { register, control, handleSubmit, reset } = useForm<{
-    measureTypes: MeasureType[]
+    triggerAiPrompt: MeasureType[]
   }>({
     defaultValues: {
-      measureTypes: [],
+      triggerAiPrompt: [],
     },
   })
 
   const { fields } = useFieldArray({
     control,
-    name: 'measureTypes',
+    name: 'triggerAiPrompt',
   })
 
   // Sync with settings data when it loads
   useEffect(() => {
-    if (settings && settings.measureTypes) {
-      reset({ measureTypes: settings.measureTypes })
+    if (settings && settings.triggerAiPrompt) {
+      reset({ triggerAiPrompt: settings.triggerAiPrompt })
     }
   }, [settings, reset])
 
-  const onSubmit = async (values: { measureTypes: MeasureType[] }) => {
+  const onSubmit = async (values: { triggerAiPrompt: MeasureType[] }) => {
     if (!settings?._id) return
 
     try {
@@ -57,16 +57,16 @@ const TriggerAiPromptControl = ({ settings, onUpdate }: AiPromptControlProps) =>
             Authorization: `Bearer ${accessToken}`,
           },
           body: JSON.stringify({
-            measureTypes: values.measureTypes,
+            triggerAiPrompt: values.triggerAiPrompt,
           }),
         },
       )
 
       if (!res.ok) {
-        throw new Error('Failed to update measure prompts')
+        throw new Error('Failed to update trigger AI prompt')
       }
 
-      toast.success('Measure prompts updated successfully!')
+      toast.success('Trigger AI prompt updated successfully!')
       onUpdate()
     } catch (err: any) {
       toast.error(err.message || 'Failed to update')
@@ -78,7 +78,7 @@ const TriggerAiPromptControl = ({ settings, onUpdate }: AiPromptControlProps) =>
   if (!fields || fields.length === 0) {
     return (
       <div className="py-10 text-center text-gray-400">
-        {t('noMeasureTypesFound')}
+        {t('noTriggerAiPromptFound')}
       </div>
     )
   }
@@ -91,7 +91,7 @@ const TriggerAiPromptControl = ({ settings, onUpdate }: AiPromptControlProps) =>
             {t('german')}
           </div>
           <div className="py-3 px-4 text-center font-bold text-sm uppercase">
-            {t('measuresPromptsHeader')}
+            {t('triggerAiPromptHeader')}
           </div>
           <div className="py-3 px-4 text-center font-bold text-sm uppercase text-[#ECF2CB]">
             {t('english')}
@@ -111,7 +111,7 @@ const TriggerAiPromptControl = ({ settings, onUpdate }: AiPromptControlProps) =>
                 {t('promptLabel')}
               </span>
               <Textarea
-                {...register(`measureTypes.${index}.values.de`)}
+                {...register(`triggerAiPrompt.${index}.values.de`)}
                 placeholder={t('germanPromptPlaceholder')}
                 className="flex-1 bg-white border border-[#E2E8F0] focus-visible:ring-0 resize-none text-[20px] font-normal leading-[110%] text-[#00253E] rounded-[4px] p-4"
               />
@@ -120,7 +120,7 @@ const TriggerAiPromptControl = ({ settings, onUpdate }: AiPromptControlProps) =>
             {/* Middle Side */}
             <div className="flex items-center justify-center py-4 ">
               <div className="bg-[#BADA55] w-full min-h-[64px] py-4 flex items-center justify-center rounded-[4px] text-center px-4 shadow-sm border border-[#BADA55]">
-                <span className="text-[18px] font-semibold text-[#00253E] leading-[110%]">
+                <span className="text-[18px] font-semibold text-[#00253E] leading-[110%] uppercase">
                   {field.name}
                 </span>
 
@@ -133,7 +133,7 @@ const TriggerAiPromptControl = ({ settings, onUpdate }: AiPromptControlProps) =>
                 {t('promptLabel')}
               </span>
               <Textarea
-                {...register(`measureTypes.${index}.values.en`)}
+                {...register(`triggerAiPrompt.${index}.values.en`)}
                 placeholder={t('englishPromptPlaceholder')}
                 className="flex-1 bg-white border border-[#E2E8F0] focus-visible:ring-0 resize-none text-[20px] font-normal leading-[110%] text-[#00253E] rounded-[4px] p-4"
               />

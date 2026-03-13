@@ -25,6 +25,7 @@ export interface SystemSettings {
     roleTypes: TypeItem[]
     categoryTypes: TypeItem[]
     measureTypes: MeasureType[]
+    triggerAiPrompt: MeasureType[]
     createdAt?: string
     updatedAt?: string
     __v?: number

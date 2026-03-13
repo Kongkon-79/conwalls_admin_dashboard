@@ -51,6 +51,8 @@
         "englishPromptPlaceholder": "English prompt...",
         "promptLabel": "Prompt",
         "noMeasureTypesFound": "No measure types found. Please add them in the Dropdown Control section first.",
+        "triggerAiPromptHeader": "Trigger AI Prompt",
+        "noTriggerAiPromptFound": "No trigger AI prompt found.",
         "roleType": "Role Type",
         "categoryType": "Category Type",
         "measureType": "Measure Type",
