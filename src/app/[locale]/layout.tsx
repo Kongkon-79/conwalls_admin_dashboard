@@ -6,15 +6,6 @@ import AppProvider from '@/components/providers/AppProvider'
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages } from 'next-intl/server'
 
-import { Nunito_Sans } from 'next/font/google'
-
-const nunito = Nunito_Sans({
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700', '800'],
-  variable: '--font-nunito',
-})
-
-
 export const metadata: Metadata = {
   title: 'Conwalls Admin Dashboard',
   description: 'Conwalls -Admin Dashboard. manage trainer and system settings',
@@ -30,7 +21,7 @@ export default async function RootLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale} className={nunito.variable}>
+    <html lang={locale}>
       <head>
         <meta name="google" content="notranslate" />
       </head>

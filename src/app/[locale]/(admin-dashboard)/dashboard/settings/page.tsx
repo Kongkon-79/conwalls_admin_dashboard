@@ -21,6 +21,7 @@ import {
 } from '@/components/ui/accordion'
 import { Button } from '@/components/ui/button'
 import HelpTextControl from './_components/HelpTextControl'
+import StakeholderHelpTextControl from './_components/StakeholderHelpTextControl'
 import AiPromptControl from './_components/AiPromptControl'
 import DropdownControl from './_components/DropdownControl'
 import ResetPassword from './_components/ResetPassword'
@@ -76,6 +77,14 @@ const SettingsPage = () => {
           body: JSON.stringify({
             roleTypes: [{ name: 'Opinion Leader' }, { name: 'Supporter' }],
             helpTexts: [{ name: 'Relevance', values: { de: '', en: '' } }],
+            stakeholderHelpTexts: [
+              { name: 'Pain point', values: { de: '', en: '' } },
+              { name: 'Benefits', values: { de: '', en: '' } },
+              { name: 'Trigger Evaluations', values: { de: '', en: '' } },
+              { name: 'Objections / Concerns', values: { de: '', en: '' } },
+              { name: 'Objection Handling', values: { de: '', en: '' } },
+              { name: 'Call to Action', values: { de: '', en: '' } },
+            ],
             categoryTypes: [{ name: 'Communication' }],
             measureTypes: [
               { name: 'Presentation', values: { de: '', en: '' } },
@@ -213,6 +222,27 @@ const SettingsPage = () => {
               </AccordionTrigger>
               <AccordionContent className="pt-2 pb-6">
                 <AiPromptControl
+                  settings={settings}
+                  onUpdate={() =>
+                    queryClient.invalidateQueries({
+                      queryKey: ['system-settings'],
+                    })
+                  }
+                />
+              </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem
+              value="stakeholder-help-text"
+              className="border-none bg-gradient-to-b from-[#F1FFC5] via-[#F6FFDA] to-white rounded-[8px] px-4 border-b border-[#8ADA55]"
+            >
+              <AccordionTrigger className="hover:no-underline py-4">
+                <span className="text-[22px] font-medium leading-[120%] text-[#00253E]">
+                  {t('stakeholderHelpTextControl')}
+                </span>
+              </AccordionTrigger>
+              <AccordionContent className="pt-2 pb-6">
+                <StakeholderHelpTextControl
                   settings={settings}
                   onUpdate={() =>
                     queryClient.invalidateQueries({

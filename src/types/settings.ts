@@ -22,6 +22,7 @@ export interface MeasureType {
 export interface SystemSettings {
     _id: string
     helpTexts: HelpText[]
+    stakeholderHelpTexts: HelpText[]
     roleTypes: TypeItem[]
     categoryTypes: TypeItem[]
     measureTypes: MeasureType[]

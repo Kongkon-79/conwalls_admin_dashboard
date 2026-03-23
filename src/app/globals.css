@@ -11,6 +11,7 @@
 
 @layer base {
   :root {
+    --font-nunito: "Nunito Sans", "Nunito", ui-sans-serif, system-ui, sans-serif;
     /* Primary Base (#BADA55) */
     --primary: 74 64% 60%;
     --primary-foreground: 0 0% 0%;
