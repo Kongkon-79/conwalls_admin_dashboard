@@ -95,32 +95,32 @@ const TriggerAiPromptControl = ({
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-0">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       {/* Header Row */}
-      <div className="bg-[#00253E] text-white overflow-hidden rounded-t-[8px]">
-        <div className="grid grid-cols-[1fr_200px_1fr] border-b border-gray-700">
-          <div className="py-3 px-4 text-center font-bold text-sm uppercase text-[#D0DDE8]">
+      <div className="hidden overflow-hidden rounded-t-[12px] bg-[#00253E] text-white lg:block">
+        <div className="grid grid-cols-[minmax(0,1fr)_260px_minmax(0,1fr)] border-b border-gray-700">
+          <div className="px-6 py-4 text-center text-sm font-bold uppercase tracking-[0.18em] text-[#D0DDE8]">
             {t('german')}
           </div>
-          <div className="py-3 px-4 text-center font-bold text-sm uppercase">
+          <div className="px-6 py-4 text-center text-sm font-bold uppercase tracking-[0.18em]">
             {t('triggerAiPromptHeader')}
           </div>
-          <div className="py-3 px-4 text-center font-bold text-sm uppercase text-[#ECF2CB]">
+          <div className="px-6 py-4 text-center text-sm font-bold uppercase tracking-[0.18em] text-[#ECF2CB]">
             {t('english')}
           </div>
         </div>
       </div>
 
       {/* Rows */}
-      <div className="space-y-0 w-full overflow-x-auto">
+      <div className="w-full space-y-0">
         {fields.map((field, index) => (
           <div
             key={field.id}
-            className="grid grid-cols-[1fr_200px_1fr] items-stretch gap-6 py-4"
+            className="grid gap-4 py-4 lg:grid-cols-[minmax(0,1fr)_260px_minmax(0,1fr)] lg:gap-0 lg:py-0"
           >
             {/* German Side */}
-            <div className="bg-[#D0DDE8] p-4 flex flex-col gap-2 rounded-[4px]">
-              <span className="text-[11px] text-[#00253E] uppercase font-semibold opacity-60 tracking-wider">
+            <div className="flex min-h-[260px] flex-col gap-2 bg-[#D0DDE8] p-4 lg:rounded-none lg:p-4">
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-[#00253E] opacity-60">
                 {t('promptLabel')} (DE)
               </span>
               <TiptapEditor
@@ -135,17 +135,20 @@ const TriggerAiPromptControl = ({
             </div>
 
             {/* Middle — name badge */}
-            <div className="flex items-center justify-center py-4">
-              <div className="bg-[#BADA55] w-full min-h-[64px] py-4 flex items-center justify-center rounded-[4px] text-center px-4 shadow-sm border border-[#BADA55]">
-                <span className="text-[18px] font-semibold text-[#00253E] leading-[110%] uppercase">
+            <div className="order-first flex items-center justify-center lg:order-none">
+              <div className="flex min-h-[92px] w-full max-w-[180px] flex-col items-center justify-center rounded-[10px] border border-[#BADA55] bg-[#BADA55] px-4 py-4 text-center shadow-[0_8px_18px_rgba(186,218,85,0.22)]">
+                <span className="max-w-[130px] text-[18px] font-semibold leading-[1.08] text-[#00253E] uppercase">
                   {field.name}
+                </span>
+                <span className="mt-2 rounded-full border border-[#00253E]/10 bg-white/55 px-3 py-[5px] text-[10px] font-semibold uppercase tracking-[0.14em] text-[#00253E]/70">
+                  AI Prompt
                 </span>
               </div>
             </div>
 
             {/* English Side */}
-            <div className="bg-[#ECF2CB] p-4 flex flex-col gap-2 rounded-[4px]">
-              <span className="text-[11px] text-[#00253E] uppercase font-semibold opacity-60 tracking-wider">
+            <div className="flex min-h-[260px] flex-col gap-2 bg-[#ECF2CB] p-4 lg:rounded-none lg:p-4">
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-[#00253E] opacity-60">
                 {t('promptLabel')} (EN)
               </span>
               <TiptapEditor
@@ -163,7 +166,7 @@ const TriggerAiPromptControl = ({
       </div>
 
       {/* Save Button */}
-      <div className="flex justify-end pt-6">
+      <div className="flex justify-end pt-2">
         <Button
           type="submit"
           disabled={isSubmitting}

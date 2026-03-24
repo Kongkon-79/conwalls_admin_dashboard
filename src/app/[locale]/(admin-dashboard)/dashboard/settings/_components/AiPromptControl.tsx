@@ -124,67 +124,67 @@ const AiPromptControl = ({ settings, onUpdate }: AiPromptControlProps) => {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-0">
-      <div className="bg-[#00253E] text-white overflow-hidden rounded-t-[8px]">
-        <div className="grid grid-cols-[1fr_200px_1fr] border-b border-gray-700">
-          <div className="py-3 px-4 text-center font-bold text-sm uppercase text-[#D0DDE8]">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      <div className="hidden overflow-hidden rounded-t-[12px] bg-[#00253E] text-white lg:block">
+        <div className="grid grid-cols-[minmax(0,1fr)_260px_minmax(0,1fr)] border-b border-gray-700">
+          <div className="px-6 py-4 text-center text-sm font-bold uppercase tracking-[0.18em] text-[#D0DDE8]">
             {t('german')}
           </div>
-          <div className="py-3 px-4 text-center font-bold text-sm uppercase">
+          <div className="px-6 py-4 text-center text-sm font-bold uppercase tracking-[0.18em]">
             {t('measuresPromptsHeader')}
           </div>
-          <div className="py-3 px-4 text-center font-bold text-sm uppercase text-[#ECF2CB]">
+          <div className="px-6 py-4 text-center text-sm font-bold uppercase tracking-[0.18em] text-[#ECF2CB]">
             {t('english')}
           </div>
         </div>
       </div>
 
-      <div className="space-y-0 w-full overflow-x-auto">
+      <div className="w-full space-y-0">
         {fields.map((field, index) => (
           <div
             key={field.id}
-            className="grid grid-cols-[1fr_200px_1fr] items-stretch min-h-[160px] gap-6"
+            className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_260px_minmax(0,1fr)] lg:gap-0"
           >
             {/* German Side */}
-            <div className="bg-[#D0DDE8] p-4 flex flex-col justify-center">
-              <span className="text-[12px] text-[#00253E] uppercase mb-2 font-semibold ml-1 opacity-60">
+            <div className="flex min-h-[220px] flex-col bg-[#D0DDE8] p-4 lg:rounded-none lg:p-4">
+              <span className="mb-2 ml-1 text-[12px] font-semibold uppercase text-[#00253E] opacity-60">
                 {t('promptLabel')}
               </span>
               <Textarea
                 {...register(`measureTypes.${index}.values.de`)}
                 placeholder={t('germanPromptPlaceholder')}
-                className="flex-1 bg-white border border-[#E2E8F0] focus-visible:ring-0 resize-none text-[20px] font-normal leading-[110%] text-[#00253E] rounded-[4px] p-4"
+                className="flex-1 resize-none rounded-[4px] border border-[#E2E8F0] bg-white p-4 text-[20px] font-normal leading-[110%] text-[#00253E] focus-visible:ring-0"
               />
             </div>
 
             {/* Middle Side */}
-            <div className="flex items-center justify-center py-4 ">
-              <div className="bg-[#BADA55] w-full min-h-[64px] py-4 flex items-center justify-center rounded-[4px] text-center px-4 shadow-sm border border-[#BADA55]">
-                <span className="text-[18px] font-semibold text-[#00253E] leading-[110%]">
+            <div className="order-first flex items-center justify-center lg:order-none">
+              <div className="flex min-h-[92px] w-full max-w-[180px] flex-col items-center justify-center rounded-[10px] border border-[#BADA55] bg-[#BADA55] px-4 py-4 text-center shadow-[0_8px_18px_rgba(186,218,85,0.22)]">
+                <span className="max-w-[130px] text-[18px] font-semibold leading-[1.08] text-[#00253E]">
                   {field.name}
                 </span>
-                <span className="block text-[11px] mt-1 uppercase tracking-wide text-[#00253E]/60">
+                <span className="mt-2 rounded-full border border-[#00253E]/10 bg-white/55 px-3 py-[5px] text-[10px] font-semibold uppercase tracking-[0.14em] text-[#00253E]/70">
                   {field.categoryName}
                 </span>
               </div>
             </div>
 
             {/* English Side */}
-            <div className="bg-[#ECF2CB] p-4 flex flex-col justify-center ">
-              <span className="text-[12px] text-[#00253E] uppercase mb-2 font-semibold ml-1 opacity-60">
+            <div className="flex min-h-[220px] flex-col bg-[#ECF2CB] p-4 lg:rounded-none lg:p-4">
+              <span className="mb-2 ml-1 text-[12px] font-semibold uppercase text-[#00253E] opacity-60">
                 {t('promptLabel')}
               </span>
               <Textarea
                 {...register(`measureTypes.${index}.values.en`)}
                 placeholder={t('englishPromptPlaceholder')}
-                className="flex-1 bg-white border border-[#E2E8F0] focus-visible:ring-0 resize-none text-[20px] font-normal leading-[110%] text-[#00253E] rounded-[4px] p-4"
+                className="flex-1 resize-none rounded-[4px] border border-[#E2E8F0] bg-white p-4 text-[20px] font-normal leading-[110%] text-[#00253E] focus-visible:ring-0"
               />
             </div>
           </div>
         ))}
       </div>
 
-      <div className="flex justify-end pt-6">
+      <div className="flex justify-end pt-2">
         <Button
           type="submit"
           disabled={isSubmitting}
